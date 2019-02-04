@@ -49,7 +49,9 @@ body{
     font-size: 1.2em;
     font-style: italic;
   }
-  
+  input[type=text],[type=email],[type=number],[type=password] {
+    color: #000000
+  }
   .password{
     border: none;
     border-bottom: #ccc 1px solid;
