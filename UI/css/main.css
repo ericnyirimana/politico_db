@@ -188,6 +188,19 @@ p {
   margin: 4px 2px;
   cursor: pointer;
 }
+.button-blue
+{
+  background-color: #18254f;
+  border: none;
+  color: white;
+  padding: 8px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
 .meetup-header
 {
 	text-align: center;
@@ -293,21 +306,21 @@ color: #ffffff;
 {
  width: 3%;
 }
-.form-class
-{
-	width: 70%;
+.form-class {
+    width: 60%;
     height: 45px;
-    margin-left: 15%;
+    margin-left: 27%;
+    padding: 20px;
 }
 .input-form
 {
 	float: left;
-    width: 100%;
+    width: 62%;
     height: 30px;
 	margin-bottom: 13px;
 	padding: 5px;
 }
-.form-add-meetup
+.form-add
 {
 	height: 450px;
 }
