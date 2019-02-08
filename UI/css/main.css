@@ -156,6 +156,7 @@ p {
 	margin-left: -44px;
 }
 .footer {
+  padding: 26px 0px 14px 0px;
   background-color: #18254f;
   text-align: center;
   color: #ffffff;
@@ -387,6 +388,10 @@ table tr td{
 .curved
 {
 	border-radius: 20px;
+}
+.menu-left
+{
+	margin-right: 300px;
 }
 /*MEDIA QUERY*/
 @media only screen and (max-width : 640px) {
