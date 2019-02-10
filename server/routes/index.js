@@ -1,10 +1,10 @@
 import express from 'express';
 
-// import users from './users';
+import parties from './parties';
 
 const app = express();
 
 
-// app.use('/users', users);
+app.use('/parties', parties);
 
 export default app;
