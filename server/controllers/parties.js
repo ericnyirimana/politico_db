@@ -42,7 +42,7 @@ const specificParty = (req, res) => {
     if (!party) {
         return res.status(404).send({
             status: 404,
-            error: 'Political with given ID was not found'
+            error: 'Political party with given ID was not found'
         });
     }
     const response = {
