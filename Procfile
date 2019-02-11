@@ -1,1 +1,1 @@
-web: NODE_ENV=production --exec babel-node ./server/config/index
+web: NODE_ENV=production --exec nodemon --exec babel-node --presets env ./server/config/index
