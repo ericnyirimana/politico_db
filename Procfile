@@ -1,0 +1,1 @@
+web: NODE_ENV=production --exec babel-node ./server/config/index
