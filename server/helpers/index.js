@@ -2,6 +2,7 @@ import Joi from 'joi';
 import fs from 'fs';
 
 import parties from './parties';
+import offices from './offices';
 
 const validator = (identifier, data) => {
     let schema = false;
@@ -15,6 +16,13 @@ const validator = (identifier, data) => {
                 name: Joi.string().trim().min(2).required(),
                 hqAddress: Joi.string().required(),
                 logoUrl: Joi.string().trim().required()
+            };
+            break;
+        }
+        case 'offices': {
+            schema = {
+                name: Joi.string().trim().min(2).required(),
+                type: Joi.string().required()
             };
             break;
         }
@@ -45,6 +53,10 @@ const writeInDb = (identifier, data) => {
             file = './server/models/parties.json';
             break;
         }
+        case 'offices': {
+            file = './server/models/offices.json';
+            break;
+        }
         default: {
             file = 'unknown.json';
         }
@@ -60,4 +72,4 @@ const validationErrors = (res, error) => {
     });
 };
 
-export { parties, validator, writeInDb, validationErrors };
+export { parties, offices, validator, writeInDb, validationErrors };
