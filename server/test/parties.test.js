@@ -55,9 +55,10 @@ const partiesTest = {
   });
 
   describe('Update parties Creation Test', () => {
+    const id = 2;
     it('Political parties creation Succeed', (done) => {
       chai.request(server)
-        .patch('/api/v1/parties')
+        .patch(`/api/v1/parties/${id}`)
         .send(partiesTest)
         .end((err, res) => {
           res.should.have.status(200);
