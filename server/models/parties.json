@@ -4,5 +4,35 @@
     "name": "PSD",
     "hqAddress": "Kimironko",
     "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
+  },
+  {
+    "id": 2,
+    "name": "FPR",
+    "hqAddress": "Rusororo",
+    "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
+  },
+  {
+    "id": 3,
+    "name": "FPR",
+    "hqAddress": "Rusororo",
+    "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
+  },
+  {
+    "id": 4,
+    "name": "FPR",
+    "hqAddress": "Rusororo",
+    "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
+  },
+  {
+    "id": 5,
+    "name": "FPR",
+    "hqAddress": "Rusororo",
+    "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
+  },
+  {
+    "id": 6,
+    "name": "FPR",
+    "hqAddress": "Rusororo",
+    "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
   }
 ]
