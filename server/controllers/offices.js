@@ -1,4 +1,4 @@
-import { offices, validator, writeInDb, validationErrors } from '../helpers/index';
+import { offices, validator, writeInDb, validationErrors } from '../helpers';
 
 const addOffice = (req, res) => {
     // Validate Data

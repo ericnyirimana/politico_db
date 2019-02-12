@@ -12,12 +12,6 @@
     "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
   },
   {
-    "id": 3,
-    "name": "FPR",
-    "hqAddress": "Rusororo",
-    "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
-  },
-  {
     "id": 4,
     "name": "FPR",
     "hqAddress": "Rusororo",
@@ -55,6 +49,30 @@
   },
   {
     "id": 10,
+    "name": "FPR",
+    "hqAddress": "Rusororo",
+    "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
+  },
+  {
+    "id": 11,
+    "name": "RPF",
+    "hqAddress": "Kimironko",
+    "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
+  },
+  {
+    "id": 12,
+    "name": "RP",
+    "hqAddress": "Kimironko",
+    "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
+  },
+  {
+    "id": 12,
+    "name": "FPR",
+    "hqAddress": "Rusororo",
+    "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
+  },
+  {
+    "id": 13,
     "name": "FPR",
     "hqAddress": "Rusororo",
     "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
