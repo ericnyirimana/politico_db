@@ -2,7 +2,7 @@
 
 Politico App helps people to vote for their desired candidate, on a certain political offices belonging to a political party. It help also candidates to express their interest when running a certain political office.
 
-[![Build Status](https://travis-ci.org/ericnyirimana/politico.svg?branch=develop)](https://travis-ci.org/ericnyirimana/politico) [![Maintainability](https://api.codeclimate.com/v1/badges/0d9d661f11192d898ad3/maintainability)](https://codeclimate.com/github/ericnyirimana/politico/maintainability)
+[![Build Status](https://travis-ci.org/ericnyirimana/politico.svg?branch=develop)](https://travis-ci.org/ericnyirimana/politico) [![Maintainability](https://api.codeclimate.com/v1/badges/0d9d661f11192d898ad3/maintainability)](https://codeclimate.com/github/ericnyirimana/politico/maintainability) [![Coverage Status](https://coveralls.io/repos/github/ericnyirimana/politico/badge.svg?branch=ch-add-coverage-163939317)](https://coveralls.io/github/ericnyirimana/politico?branch=ch-add-coverage-163939317)
 
 # API ENDPOINTS
 
