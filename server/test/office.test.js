@@ -8,9 +8,11 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
+const random = Math.floor(Math.random() * 1000) + 1;
+
 const officeTest = {
     type: 'fedearal',
-    name: 'numbejGG'
+    name: 'numbejGG2' + random
 };
 
   describe('Political offices Creation Test', () => {
@@ -23,6 +25,15 @@ const officeTest = {
           expect(res.body).to.be.a('object');
           expect(res.body.data[0].type).to.be.equal(officeTest.type);
           expect(res.body.data[0].name).to.be.equal(officeTest.name);
+          done();
+        });
+    });
+    it('Check political party existance', (done) => {
+      chai.request(server)
+        .post('/api/v1/offices')
+        .send(officeTest)
+        .end((err, res) => {
+          res.should.have.status(409);
           done();
         });
     });

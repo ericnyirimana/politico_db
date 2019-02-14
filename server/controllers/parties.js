@@ -10,7 +10,7 @@ const addParty = (req, res) => {
     }
     const name = parties.find(n => (n.name === req.body.name.replace(/\s+/g, ' ').trim()));
     if (name) {
-        return res.status(400).send({
+        return res.status(409).send({
             status: 409,
             error: 'Oops! Political party name already exist'
         });
