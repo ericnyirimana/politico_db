@@ -2,6 +2,9 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 
 import server from '../app';
+import { offices } from '../helpers';
+
+const officesMaxID = offices.length;
 
 const should = chai.should();
 const expect = chai.expect;
@@ -21,7 +24,7 @@ const officeTest = {
         .post('/api/v1/offices')
         .send(officeTest)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(201);
           expect(res.body).to.be.a('object');
           expect(res.body.data[0].type).to.be.equal(officeTest.type);
           expect(res.body.data[0].name).to.be.equal(officeTest.name);
@@ -52,10 +55,9 @@ const officeTest = {
   });
 
   describe('Get specific political offices Test', () => {
-      const id = 2;
     it('Get specific political offices Succeed', (done) => {
       chai.request(server)
-        .get(`/api/v1/offices/${id}`)
+        .get(`/api/v1/offices/${officesMaxID}`)
         .end((err, res) => {
           res.should.have.status(200);
           expect(res.body).to.be.a('object');

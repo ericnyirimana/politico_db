@@ -7,7 +7,7 @@
   },
   {
     "id": 2,
-    "name": "FPROLH983",
+    "name": "FPROLH785",
     "hqAddress": "Rusororo",
     "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
   },
@@ -18,14 +18,20 @@
     "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
   },
   {
-    "id": 5,
-    "name": "PSDG",
-    "hqAddress": "Kimironko",
+    "id": 7,
+    "name": "FPROLH785",
+    "hqAddress": "Rusororo",
     "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
   },
   {
-    "id": 6,
-    "name": "FPROLH983",
+    "id": 7,
+    "name": "FPROLH24",
+    "hqAddress": "Rusororo",
+    "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
+  },
+  {
+    "id": 7,
+    "name": "FPROLH477",
     "hqAddress": "Rusororo",
     "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
   }

@@ -24,7 +24,7 @@ const partiesTest = {
         .post('/api/v1/parties')
         .send(partiesTest)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(201);
           expect(res.body).to.be.a('object');
           expect(res.body.data[0].type).to.be.equal(partiesTest.type);
           expect(res.body.data[0].hqAddress).to.be.equal(partiesTest.hqAddress);
@@ -56,10 +56,9 @@ const partiesTest = {
   });
 
   describe('Get specific political parties test', () => {
-      const id = 2;
     it('Get specific political parties Succeed', (done) => {
       chai.request(server)
-        .get(`/api/v1/parties/${id}`)
+        .get(`/api/v1/parties/${partiesMaxID}`)
         .end((err, res) => {
           res.should.have.status(200);
           expect(res.body).to.be.a('object');
@@ -77,10 +76,9 @@ const partiesTest = {
   });
 
   describe('Update parties Creation Test', () => {
-    const id = 2;
     it('Political parties creation Succeed', (done) => {
       chai.request(server)
-        .patch(`/api/v1/parties/${id}`)
+        .patch(`/api/v1/parties/${partiesMaxID}`)
         .send(partiesTest)
         .end((err, res) => {
           res.should.have.status(200);
@@ -92,7 +90,6 @@ const partiesTest = {
   });
 
   describe('Delete a party', () => {
-    const id = 2;
     it('Party deletion succeed', (done) => {
       chai.request(server)
         .delete(`/api/v1/parties/${partiesMaxID}`)
