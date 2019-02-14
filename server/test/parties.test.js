@@ -8,7 +8,7 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 const partiesTest = {
-    name: 'FPROLR',
+    name: 'FPROLR4',
     hqAddress: 'Rusororo',
     logoUrl: 'https://ericnyirimana.github.io/politico/UI/img/party-logo.png',
 };
