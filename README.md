@@ -68,7 +68,7 @@ Javascript
 #### Testing Framework
 
 ```
- Mocha, Chai and Supertest
+ Mocha, Chai
  ```
 
 #### Style Guide
