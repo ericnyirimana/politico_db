@@ -8,20 +8,27 @@ const addParty = (req, res) => {
     if (error) {
         return validationErrors(res, error);
     }
+    const name = parties.find(n => (n.name === req.body.name.replace(/\s+/g, ' ').trim()));
+    if (name) {
+        return res.status(400).send({
+            status: 409,
+            error: 'Oops! Political party name already exist'
+        });
+    }
     const party = {
         id: parties.length + 1,
-        name: req.body.name,
-        hqAddress: req.body.hqAddress,
-        logoUrl: req.body.logoUrl,
+        name: req.body.name.replace(/\s+/g, ' ').trim(),
+        hqAddress: req.body.hqAddress.replace(/\s+/g, ' ').trim(),
+        logoUrl: req.body.logoUrl.replace(/\s+/g, ' ').trim(),
     };
     parties.push(party);
     if (writeInDb('parties', parties)) {
         const response = {
-            status: 200,
+            status: 201,
             data: [{
-                name: req.body.name,
-                hqAddress: req.body.hqAddress,
-                logoUrl: req.body.logoUrl
+                name: party.name,
+                hqAddress: party.hqAddress,
+                logoUrl: party.logoUrl
             }]
         };
         res.send(response);
