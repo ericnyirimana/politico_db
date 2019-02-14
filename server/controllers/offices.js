@@ -8,18 +8,25 @@ const addOffice = (req, res) => {
     if (error) {
         return validationErrors(res, error);
     }
+    const name = offices.find(n => (n.name === req.body.name.replace(/\s+/g, ' ').trim()));
+    if (name) {
+        return res.status(400).send({
+            status: 409,
+            error: 'Oops! Political office name already exist'
+        });
+    }
     const office = {
         id: offices.length + 1,
-        type: req.body.type,
-        name: req.body.name
+        type: req.body.type.replace(/\s+/g, ' ').trim(),
+        name: req.body.name.replace(/\s+/g, ' ').trim()
     };
     offices.push(office);
     if (writeInDb('offices', offices)) {
         const response = {
-            status: 200,
+            status: 201,
             data: [{
-                type: req.body.type,
-                name: req.body.name
+                type: req.body.type.replace(/\s+/g, ' ').trim(),
+                name: req.body.name.replace(/\s+/g, ' ').trim()
             }]
         };
         res.send(response);
