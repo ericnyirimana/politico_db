@@ -10,7 +10,7 @@ chai.use(chaiHttp);
 
 const officeTest = {
     type: 'fedearal',
-    name: 'numbejG'
+    name: 'numbejGH'
 };
 
   describe('Political offices Creation Test', () => {
