@@ -7,7 +7,7 @@
   },
   {
     "id": 2,
-    "name": "FPR",
+    "name": "FPROL",
     "hqAddress": "Rusororo",
     "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
   },
@@ -146,6 +146,12 @@
   {
     "id": 26,
     "name": "FPR1667",
+    "hqAddress": "Rusororo",
+    "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
+  },
+  {
+    "id": 27,
+    "name": "FPROL",
     "hqAddress": "Rusororo",
     "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
   }
