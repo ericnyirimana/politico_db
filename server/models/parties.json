@@ -7,7 +7,7 @@
   },
   {
     "id": 2,
-    "name": "FPROLH335",
+    "name": "FPROLH983",
     "hqAddress": "Rusororo",
     "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
   },
@@ -19,7 +19,13 @@
   },
   {
     "id": 5,
-    "name": "FPR",
+    "name": "PSDG",
+    "hqAddress": "Kimironko",
+    "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
+  },
+  {
+    "id": 6,
+    "name": "FPROLH983",
     "hqAddress": "Rusororo",
     "logoUrl": "https://ericnyirimana.github.io/politico/UI/img/party-logo.png"
   }

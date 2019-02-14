@@ -31,7 +31,7 @@ const addParty = (req, res) => {
                 logoUrl: party.logoUrl
             }]
         };
-        res.send(response);
+        res.status(201).send(response);
     }
     return true;
 };

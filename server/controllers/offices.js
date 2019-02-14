@@ -29,7 +29,7 @@ const addOffice = (req, res) => {
                 name: req.body.name.replace(/\s+/g, ' ').trim()
             }]
         };
-        res.send(response);
+        res.status(201).send(response);
     }
     return true;
 };

@@ -7,21 +7,6 @@
   {
     "id": 2,
     "type": "fedearal",
-    "name": "number1"
-  },
-  {
-    "id": 3,
-    "type": "fedearal",
-    "name": "number1"
-  },
-  {
-    "id": 4,
-    "type": "fedearal",
-    "name": "number1"
-  },
-  {
-    "id": 5,
-    "type": "fedearal",
-    "name": "number1"
+    "name": "number2"
   }
 ]
