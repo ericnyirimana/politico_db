@@ -17,3 +17,14 @@ function validateSignup() {
     }
      window.location.href = '../html/index.html';
 }
+
+function validateParty() {
+    const partyname = document.getElementById('partyname').value;
+    const address = document.getElementById('address').value;
+    const logourl = document.getElementById('logourl').value;
+    if (partyname === '' || address === '' || logourl === '') {
+        document.getElementById('alert').style.display = 'block';
+        return false;
+    }
+     window.location.href = '../html/political-party.html';
+}
