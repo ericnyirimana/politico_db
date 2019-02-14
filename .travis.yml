@@ -6,7 +6,7 @@ addons:
     repo_token:c7a2d595fe08ea6448a8229daf63ad248a8779f8dceb2e50d2d1687abb2518b6
 before_script:
  - npm install codeclimate-test-reporter nyc -g
-after_script:
- - codeclimate-test-reporter < ./coverage/lcov.info
 after_success:
-  - npm run coverage && cat ./coverage/lcov.info | coveralls
+  - npm run coverage
+  - codeclimate-test-reporter < ./coverage/lcov.info
+  - nyc report --reporter=text-lcov | coveralls
