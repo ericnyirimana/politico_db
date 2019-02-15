@@ -25,8 +25,8 @@ const addOffice = (req, res) => {
         const response = {
             status: 201,
             data: [{
-                type: req.body.type.replace(/\s+/g, ' ').trim(),
-                name: req.body.name.replace(/\s+/g, ' ').trim()
+                type: office.type,
+                name: office.name
             }]
         };
         res.status(201).send(response);
