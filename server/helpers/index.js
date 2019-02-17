@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import bcrypt from 'bcrypt';
 import fs from 'fs';
 
 import parties from './parties';
@@ -23,6 +24,22 @@ const validator = (identifier, data) => {
             schema = {
                 name: Joi.string().trim().min(2).required(),
                 type: Joi.string().required()
+            };
+            break;
+        }
+        case 'user': {
+            schema = {
+                firstname: Joi.string().trim().min(3).required(),
+                lastname: Joi.string().trim().min(3).required(),
+                othername: Joi.string().trim(),
+                email: Joi.string().trim().email({
+                    minDomainAtoms: 2,
+                }).required(),
+                phonenumber: Joi.number().required(),
+                username: Joi.string().trim().min(5).required(),
+                password: Joi.string().trim().min(8).required(),
+                passporturl: Joi.string().trim(),
+                isadmin: Joi.boolean().required(),
             };
             break;
         }
@@ -72,4 +89,14 @@ const validationErrors = (res, error) => {
     });
 };
 
-export { parties, offices, validator, writeInDb, validationErrors };
+const hashPassword = (password) => {
+    const hashedPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(8));
+    return hashedPassword;
+};
+
+const comparePassword = (passwordHash, password) => {
+    const comparedPassword = bcrypt.compareSync(password, passwordHash);
+    return comparedPassword;
+};
+
+export { parties, offices, validator, writeInDb, hashPassword, comparePassword, validationErrors };
