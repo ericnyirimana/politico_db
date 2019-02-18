@@ -19,8 +19,8 @@ const validator = (identifier, data) => {
         case 'parties': {
             schema = {
                 name: Joi.string().trim().min(2).required(),
-                hqAddress: Joi.string().required(),
-                logoUrl: Joi.string().trim().required()
+                hqaddress: Joi.string().required(),
+                logourl: Joi.string().trim().required()
             };
             break;
         }
