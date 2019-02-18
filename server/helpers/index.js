@@ -1,9 +1,13 @@
 import Joi from 'joi';
 import bcrypt from 'bcrypt';
 import fs from 'fs';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
 import parties from './parties';
 import offices from './offices';
+
+dotenv.config();
 
 const validator = (identifier, data) => {
     let schema = false;
@@ -99,4 +103,10 @@ const comparePassword = (passwordHash, password) => {
     return comparedPassword;
 };
 
-export { parties, offices, validator, writeInDb, hashPassword, comparePassword, validationErrors };
+const generateToken = (userinfo) => {
+    const Issuetoken = jwt.sign(userinfo,
+        process.env.SECRET, { expiresIn: '1d' });
+    return Issuetoken;
+};
+
+export { parties, offices, validator, writeInDb, hashPassword, comparePassword, generateToken, validationErrors };

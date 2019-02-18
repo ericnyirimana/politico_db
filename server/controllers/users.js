@@ -1,5 +1,5 @@
 import {
-    validator, validationErrors, hashPassword
+    validator, validationErrors, hashPassword, generateToken
 } from '../helpers/index';
 import db from '../models/db';
 
@@ -47,22 +47,24 @@ const Users = {
         try {
             const { rows } = await db.query(text, values);
 
-            // const role = ((rows[0].isadmin) ? 'admin' : 'standard');
+            const role = ((rows[0].isadmin) ? 'admin' : 'standard');
 
-            // const issueToken = generateToken({
-            //     user: rows[0].id,
-            //     username: rows[0].username,
-            //     firstname: rows[0].firstname,
-            //     lastname: rows[0].lastname,
-            //     othername: rows[0].othername,
-            //     email: rows[0].email,
-            //     phonenumber: rows[0].phonenumber,
-            //     role,
-            // });
+            const issueToken = generateToken({
+                user: rows[0].id,
+                username: rows[0].username,
+                firstname: rows[0].firstname,
+                lastname: rows[0].lastname,
+                othername: rows[0].othername,
+                email: rows[0].email,
+                phonenumber: rows[0].phonenumber,
+                passporturl: rows[0].passporturl,
+                role,
+            });
 
             const response = {
                 status: 201,
-                data: [{ rows }],
+                token: issueToken,
+                user: [{ rows }],
             };
             return res.status(201).send(response);
         } catch (errorMessage) {
