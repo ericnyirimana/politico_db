@@ -11,10 +11,10 @@ const Parties = {
         if (error) {
             return validationErrors(res, error);
         }
-        const findUsernameQuery = 'SELECT * FROM party WHERE name=$1';
-        const userResult = await db.query(findUsernameQuery, [req.body.name]);
-        const userData = userResult.rows;
-        if (userData[0]) {
+        const findpartyQuery = 'SELECT * FROM party WHERE name=$1';
+        const partyResult = await db.query(findpartyQuery, [req.body.name]);
+        const partyData = partyResult.rows;
+        if (partyData[0]) {
             return res.status(409).send({
                 status: 409,
                 error: 'Political party name already taken',
