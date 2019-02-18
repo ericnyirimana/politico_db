@@ -4,9 +4,6 @@ import fs from 'fs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
-import parties from './parties';
-import offices from './offices';
-
 dotenv.config();
 
 const validator = (identifier, data) => {
@@ -116,4 +113,4 @@ const generateToken = (userinfo) => {
     return Issuetoken;
 };
 
-export { parties, offices, validator, writeInDb, hashPassword, comparePassword, generateToken, validationErrors };
+export { validator, writeInDb, hashPassword, comparePassword, generateToken, validationErrors };

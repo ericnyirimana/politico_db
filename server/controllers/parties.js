@@ -11,6 +11,15 @@ const Parties = {
         if (error) {
             return validationErrors(res, error);
         }
+        const findUsernameQuery = 'SELECT * FROM party WHERE name=$1';
+        const userResult = await db.query(findUsernameQuery, [req.body.name]);
+        const userData = userResult.rows;
+        if (userData[0]) {
+            return res.status(409).send({
+                status: 409,
+                error: 'Political party name already taken',
+            });
+        }
         const text = 'INSERT INTO party (name, hqaddress, logourl) VALUES ($1, $2, $3)';
         const values = [
             req.body.name,
@@ -30,6 +39,19 @@ const Parties = {
             return res.status(201).send(response);
         } catch (errorMessage) {
             return res.status(400).send({ status: 400, error: errorMessage });
+        }
+    },
+    async getParties(req, res) {
+        const findAllQuery = 'SELECT * FROM party ORDER BY id DESC';
+        try {
+            const { rows } = await db.query(findAllQuery);
+            const response = {
+                status: 200,
+                data: rows,
+            };
+            return res.send(response);
+        } catch (error) {
+            return res.status(400).send({ status: 400, error });
         }
     },
 };
