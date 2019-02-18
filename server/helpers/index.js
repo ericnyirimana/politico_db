@@ -47,6 +47,13 @@ const validator = (identifier, data) => {
             };
             break;
         }
+        case 'login': {
+            schema = {
+                username: Joi.string().trim().min(5).required(),
+                password: Joi.string().trim().min(8).required(),
+            };
+            break;
+        }
         default: {
             schema = false;
         }

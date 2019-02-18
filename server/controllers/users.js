@@ -1,5 +1,5 @@
 import {
-    validator, validationErrors, hashPassword, generateToken
+    validator, validationErrors, hashPassword, comparePassword, generateToken
 } from '../helpers/index';
 import db from '../models/db';
 
@@ -67,6 +67,49 @@ const Users = {
                 user: [{ rows }],
             };
             return res.status(201).send(response);
+        } catch (errorMessage) {
+            return res.status(400).send({ status: 400, error: errorMessage });
+        }
+    },
+    async userLogin(req, res) {
+        // Validate Data
+        const { error } = validator('login', req.body);
+        if (error) {
+            return validationErrors(res, error);
+        }
+        const findAllQuery = 'SELECT * FROM users WHERE username = $1 LIMIT 1';
+        try {
+            const { rows } = await db.query(findAllQuery, [req.body.username]);
+            if (!rows[0]) {
+                return res.status(401).send({
+                    status: 401,
+                    error: 'Invalid username or password',
+                });
+            }
+            if (!comparePassword(rows[0].password, req.body.password)) {
+                return res.status(401).send({
+                    status: 401,
+                    error: 'Invalid username or password',
+                });
+            }
+            const role = ((rows[0].isadmin) ? 'admin' : 'standard');
+            const issueToken = generateToken({
+                user: rows[0].id,
+                username: rows[0].username,
+                firstname: rows[0].firstname,
+                lastname: rows[0].lastname,
+                othername: rows[0].othername,
+                email: rows[0].email,
+                phonenumber: rows[0].phonenumber,
+                passporturl: rows[0].passporturl,
+                role,
+            });
+
+            const response = {
+                status: 201,
+                data: [{ issueToken }],
+            };
+            return res.send(response);
         } catch (errorMessage) {
             return res.status(400).send({ status: 400, error: errorMessage });
         }
