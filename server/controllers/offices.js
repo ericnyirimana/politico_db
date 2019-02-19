@@ -52,6 +52,28 @@ const Offices = {
             return res.status(400).send({ status: 400, error });
         }
     },
+    async specificOffices(req, res) {
+        const text = 'SELECT * FROM office WHERE id = $1';
+        try {
+            const { rows } = await db.query(text, [req.params.id]);
+            if (!rows[0]) {
+                return res.status(404).send({
+                    status: 404,
+                    error: 'Office with given ID was not found',
+                });
+            }
+            const response = {
+                status: 200,
+                data: rows[0],
+            };
+            return res.send(response);
+        } catch (error) {
+            return res.status(400).send({
+                status: 400,
+                error,
+            });
+        }
+    },
 };
 
 export default Offices;
