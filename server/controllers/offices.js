@@ -39,6 +39,19 @@ const Offices = {
             return res.status(400).send({ status: 400, error: errorMessage });
         }
     },
+    async getOffices(req, res) {
+        const findAllQuery = 'SELECT * FROM office ORDER BY id DESC';
+        try {
+            const { rows } = await db.query(findAllQuery);
+            const response = {
+                status: 200,
+                data: rows,
+            };
+            return res.send(response);
+        } catch (error) {
+            return res.status(400).send({ status: 400, error });
+        }
+    },
 };
 
 export default Offices;
