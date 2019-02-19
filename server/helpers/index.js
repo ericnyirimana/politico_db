@@ -58,6 +58,13 @@ const validator = (identifier, data) => {
             };
             break;
         }
+        case 'votes': {
+            schema = {
+                office: Joi.number().required(),
+                candidate: Joi.number().required(),
+            };
+            break;
+        }
         default: {
             schema = false;
         }
