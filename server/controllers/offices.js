@@ -74,6 +74,75 @@ const Offices = {
             });
         }
     },
+    async addCandidate(req, res) {
+        if (req.user.role !== 'admin') {
+            return res.status(401).send({ status: 401, error: 'Unauthorized Access' });
+        }
+        // Validate Data
+        const { error } = validator('candidate', req.body);
+        if (error) {
+            return validationErrors(res, error);
+        }
+        const findpofficeQuery = 'SELECT * FROM office WHERE id=$1';
+        const officeResult = await db.query(findpofficeQuery, [req.params.id]);
+        const officeData = officeResult.rows;
+        if (!officeData[0]) {
+            return res.status(404).send({
+                status: 404,
+                error: 'Office with given ID was not found',
+            });
+        }
+        const findpuserQuery = 'SELECT * FROM users WHERE id=$1';
+        const userResult = await db.query(findpuserQuery, [req.body.user]);
+        const userData = userResult.rows;
+        if (!userData[0]) {
+            return res.status(404).send({
+                status: 404,
+                error: 'User with given ID was not found',
+            });
+        }
+        const findppartyQuery = 'SELECT * FROM party WHERE id=$1';
+        const partyResult = await db.query(findppartyQuery, [req.body.party]);
+        const partyData = partyResult.rows;
+        if (!partyData[0]) {
+            return res.status(404).send({
+                status: 404,
+                error: 'Party with given ID was not found',
+            });
+        }
+        const findpcandidateQuery = 'SELECT * FROM candidate WHERE office=$1 AND candidate=$2';
+        const candidatevalues = [
+            req.params.id,
+            req.body.user,
+        ];
+        const candidateResult = await db.query(findpcandidateQuery, candidatevalues);
+        const candidateData = candidateResult.rows;
+        if (candidateData[0]) {
+            return res.status(409).send({
+                status: 409,
+                error: 'The candidate already exist',
+            });
+        }
+        const text = 'INSERT INTO candidate (office, party, candidate) VALUES ($1, $2, $3)';
+        const values = [
+            req.params.id,
+            req.body.party,
+            req.body.user,
+        ];
+        try {
+            await db.query(text, values);
+            const response = {
+                status: 201,
+                data: [{
+                    office: req.params.id,
+                    user: req.body.user,
+                }],
+            };
+            return res.status(201).send(response);
+        } catch (errorMessage) {
+            return res.status(400).send({ status: 400, error: errorMessage });
+        }
+    },
 };
 
 export default Offices;

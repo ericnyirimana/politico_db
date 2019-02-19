@@ -44,6 +44,13 @@ const validator = (identifier, data) => {
             };
             break;
         }
+        case 'candidate': {
+            schema = {
+                party: Joi.number().required(),
+                user: Joi.number().required(),
+            };
+            break;
+        }
         case 'login': {
             schema = {
                 username: Joi.string().trim().min(5).required(),

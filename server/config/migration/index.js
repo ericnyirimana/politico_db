@@ -77,9 +77,9 @@ class Setup {
         const candidate = `
         CREATE TABLE IF NOT EXISTS candidate (
             id SERIAL PRIMARY KEY,
-            office integer,
-            party integer,
-            candidate integer
+            office INT NOT NULL REFERENCES office(id) ON DELETE CASCADE ON UPDATE CASCADE,
+            party INT NOT NULL REFERENCES party(id) ON DELETE CASCADE ON UPDATE CASCADE,
+            candidate INT NOT NULL REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
         );`;
 
         this.pool.query(candidate)
@@ -90,16 +90,16 @@ class Setup {
             console.log(error.message);
         });
 
-        const votes = `
+        const candidatesvotes = `
         CREATE TABLE IF NOT EXISTS votes (
             id SERIAL PRIMARY KEY,
             createdon date,
-            createdby integer,
-            office integer,
-            candidate integer
+            createdby INT NOT NULL REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+            office INT NOT NULL REFERENCES office(id) ON DELETE CASCADE ON UPDATE CASCADE,
+            candidate INT NOT NULL REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
         );`;
 
-        this.pool.query(votes)
+        this.pool.query(candidatesvotes)
         .then((res) => {
             // console.log(res);
         })
@@ -111,8 +111,8 @@ class Setup {
         CREATE TABLE IF NOT EXISTS petition (
             id SERIAL PRIMARY KEY,
             createdon date,
-            createdby integer,
-            office integer,
+            createdby INT NOT NULL REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+            office INT NOT NULL REFERENCES office(id) ON DELETE CASCADE ON UPDATE CASCADE,
             body text
         );`;
 
