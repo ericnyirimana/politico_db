@@ -21,7 +21,7 @@ const userTest = {
     isadmin: 'true'
 };
 
-  describe('User signup', () => {   
+  describe('User signup', () => {
     it('The user signup successfully', (done) => {
       chai.request(server)
         .post('/api/v1/auth/signup')
