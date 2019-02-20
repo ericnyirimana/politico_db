@@ -26,7 +26,6 @@ const userTest = {
         .post('/api/v1/auth/signup')
         .send(userTest)
         .end((err, res) => {
-          console.log(res.body);
           res.should.have.status(201);
           expect(res.body).to.be.a('object');
           expect(res.body.token).to.be.a('string');
