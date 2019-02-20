@@ -20,6 +20,10 @@ const userTest = {
     passporturl: 'wwww.facebook.com',
     isadmin: 'true'
 };
+const loginTest = {
+  username: 'ericnyirimana',
+  password: '1234567890'
+};
 
   describe('User signup', () => {
     it('The user signup successfully', (done) => {
@@ -30,6 +34,19 @@ const userTest = {
           res.should.have.status(201);
           expect(res.body).to.be.a('object');
           expect(res.body.token).to.be.a('string');
+          done();
+        });
+    });
+  });
+
+  describe('User Login', () => {
+    it('The user login successfully', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/login')
+        .send(loginTest)
+        .end((err, res) => {
+          res.should.have.status(200);
+          expect(res.body).to.be.a('object');
           done();
         });
     });
