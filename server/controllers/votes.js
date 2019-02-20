@@ -9,7 +9,7 @@ const Votes = {
         if (error) {
             return validationErrors(res, error);
         }
-        const findpofficeQuery = 'SELECT * FROM candidate WHERE office=$1 AND candidate=$2';
+        const findpofficeQuery = 'SELECT * FROM candidate WHERE office=$1 AND id=$2';
         const officevalues = [
             req.body.office,
             req.body.candidate,

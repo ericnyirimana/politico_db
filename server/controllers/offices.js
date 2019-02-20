@@ -143,6 +143,34 @@ const Offices = {
             return res.status(400).send({ status: 400, error: errorMessage });
         }
     },
+    async getVotes(req, res) {
+        const findpofficeQuery = 'SELECT * FROM votes WHERE office = $1';
+        const officeResult = await db.query(findpofficeQuery, [req.params.id]);
+        let data = [];
+        for (const office of officeResult.rows) {
+            const findAllVotes = 'SELECT * FROM votes WHERE office = $1 AND candidate = $2';
+            const resultVotes = await db.query(findAllVotes, [req.params.id, office.candidate]);
+            console.log(resultVotes.rows);
+                data.push({
+                    office: office.office,
+                    candidate: office.candidate,
+                    result: resultVotes.rows.length,
+                  });
+            }
+        // Filtering duplicated objects
+        data = data.filter((item, index, self) => index === self.findIndex(office => (
+        office.office === item.office && office.candidate === item.candidate
+        )));
+        try {
+            const response = {
+                status: 200,
+                data
+            };
+            res.status(200).send(response);
+        } catch (error) {
+            res.status(400).send({ status: 400, error });
+        }
+    },
 };
 
 export default Offices;

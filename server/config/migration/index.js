@@ -96,7 +96,7 @@ class Setup {
             createdon date,
             createdby INT NOT NULL REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
             office INT NOT NULL REFERENCES office(id) ON DELETE CASCADE ON UPDATE CASCADE,
-            candidate INT NOT NULL REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+            candidate INT NOT NULL REFERENCES candidate(id) ON DELETE CASCADE ON UPDATE CASCADE
         );`;
 
         this.pool.query(candidatesvotes)
