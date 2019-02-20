@@ -20,17 +20,13 @@ const userTest = {
     passporturl: 'wwww.facebook.com',
     isadmin: 'true'
 };
-const loginTest = {
-  username: 'ericnyirimana',
-  password: '1234567890'
-};
-
   describe('User signup', () => {
     it('The user signup successfully', (done) => {
       chai.request(server)
         .post('/api/v1/auth/signup')
         .send(userTest)
         .end((err, res) => {
+          console.log(res.body);
           res.should.have.status(201);
           expect(res.body).to.be.a('object');
           expect(res.body.token).to.be.a('string');
