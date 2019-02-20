@@ -7,7 +7,7 @@ const { addParty, getParties, specificParty } = Parties;
 const router = express.Router();
 
 // Create a political party record
-router.post('/', addParty);
+router.post('/', Auth.verifyToken, addParty);
 // // Get all political parties record
 router.get('/', Auth.verifyToken, getParties);
 // // Get specific political party record

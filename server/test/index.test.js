@@ -84,3 +84,14 @@ after((done) => {
         });
     });
   });
+
+  describe('Endpoint not found', () => {
+    it('Should return 404 status', (done) => {
+      chai.request(server)
+        .get('/api/v1/auth/hrye')
+        .end((err, res) => {
+          res.should.have.status(404);
+          done();
+        });
+    });
+  });
