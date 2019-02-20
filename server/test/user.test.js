@@ -38,16 +38,3 @@ const loginTest = {
         });
     });
   });
-
-  describe('User Login', () => {
-    it('The user login successfully', (done) => {
-      chai.request(server)
-        .post('/api/v1/auth/login')
-        .send(loginTest)
-        .end((err, res) => {
-          res.should.have.status(200);
-          expect(res.body).to.be.a('object');
-          done();
-        });
-    });
-  });
