@@ -2,9 +2,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 
 import server from '../app';
-import { offices } from '../helpers';
 
-const officesMaxID = offices.length;
 
 const should = chai.should();
 const expect = chai.expect;
@@ -57,7 +55,7 @@ const officeTest = {
   describe('Get specific political offices Test', () => {
     it('Get specific political offices Succeed', (done) => {
       chai.request(server)
-        .get(`/api/v1/offices/${officesMaxID}`)
+        .get('/api/v1/offices/1')
         .end((err, res) => {
           res.should.have.status(200);
           expect(res.body).to.be.a('object');
