@@ -12,6 +12,5 @@ after_success:
   - nyc report --reporter=text-lcov | coveralls
 env:
   - POSTGRES_URL : postgres://travis@localhost:5432/travis
-  - SECRET : hdj%^&.)#
 services:
   - postgresql
