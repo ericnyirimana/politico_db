@@ -121,4 +121,4 @@ class Setup {
     }
 }
 
-export default new Setup();
+new Setup();

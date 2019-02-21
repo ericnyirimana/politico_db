@@ -2,7 +2,7 @@ import express from 'express';
 
 import ENV from 'dotenv';
 import routes from './routes/index';
-import migration from './config/migration/index';
+
 
 ENV.config();
 
