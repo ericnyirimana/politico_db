@@ -12,9 +12,5 @@ router.post('/', Auth.verifyToken, addParty);
 router.get('/', Auth.verifyToken, getParties);
 // // Get specific political party record
 router.get('/:id', Auth.verifyToken, specificParty);
-// // Delete specific political party record
-// router.delete('/:id', deleteParty);
-// // Update specific political party record
-// router.patch('/:id', updateParty);
 
 export default router;

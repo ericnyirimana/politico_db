@@ -49,7 +49,6 @@ before((done) => {
 after((done) => {
   db.query('DELETE FROM users; DELETE FROM office; DELETE FROM party; DELETE FROM candidate; DELETE FROM petition; DELETE FROM votes;')
       .then(res => done()).catch((err) => {
-          console.log(err.message);
           done();
       });
 });
@@ -60,7 +59,6 @@ after((done) => {
         .type('application/x-www-form-urlencoded')
         .send(userTest)
         .end((err, res) => {
-          console.log(res);
           res.should.have.status(201);
           expect(res.body).to.be.a('object');
           expect(res.body.token).to.be.a('string');

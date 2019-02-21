@@ -32,7 +32,6 @@ class Setup {
 
         this.pool.query(users)
         .then((res) => {
-            // console.log(res);
         })
         .catch((error) => {
             console.log(error.message);
@@ -48,7 +47,6 @@ class Setup {
 
         this.pool.query(parties)
         .then((res) => {
-            // console.log(res);
         })
         .catch((error) => {
             console.log(error.message);
@@ -63,7 +61,6 @@ class Setup {
 
         this.pool.query(office)
         .then((res) => {
-            // console.log(res);
         })
         .catch((error) => {
             console.log(error.message);
@@ -79,7 +76,6 @@ class Setup {
 
         this.pool.query(candidate)
         .then((res) => {
-            // console.log(res);
         })
         .catch((error) => {
             console.log(error.message);
@@ -96,7 +92,6 @@ class Setup {
 
         this.pool.query(candidatesvotes)
         .then((res) => {
-            // console.log(res);
         })
         .catch((error) => {
             console.log(error.message);
@@ -113,7 +108,6 @@ class Setup {
 
         this.pool.query(petition)
         .then((res) => {
-            // console.log(res);
         })
         .catch((error) => {
             console.log(error.message);
