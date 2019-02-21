@@ -77,6 +77,9 @@ const Parties = {
         }
     },
     async updateParty(req, res) {
+        if (req.user.role !== 'admin') {
+            return res.status(401).send({ status: 401, error: 'Unauthorized Access' });
+        }
         const { error } = validator('updateParty', req.body);
         if (error) {
             return validationErrors(res, error);
@@ -113,6 +116,34 @@ const Parties = {
                     hqaddress: singlepartyData[0].hqaddress,
                     logourl: singlepartyData[0].logourl,
                 }],
+            };
+            return res.send(response);
+        } catch (errorMessage) {
+            return res.status(400).send({
+                status: 400,
+                error: errorMessage,
+            });
+        }
+    },
+    async deleteParty(req, res) {
+        if (req.user.role !== 'admin') {
+            return res.status(401).send({ status: 401, error: 'Unauthorized Access' });
+        }
+        const text = 'DELETE FROM party WHERE id = $1;';
+        try {
+            const findOneQuery = 'SELECT * FROM party WHERE id=$1';
+            const singlepartyResult = await db.query(findOneQuery, [req.params.id]);
+            const singlepartyData = singlepartyResult.rows;
+            if (!singlepartyData[0]) {
+                return res.status(404).send({
+                    status: 404,
+                    error: 'Party with given ID was not found',
+                });
+            }
+            await db.query(text, [req.params.id]);
+            const response = {
+                status: 200,
+                message: 'Party was deleted successfully!',
             };
             return res.send(response);
         } catch (errorMessage) {
