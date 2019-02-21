@@ -28,7 +28,6 @@ const officeTest = {
           res.should.have.status(201);
           expect(res.body).to.be.a('object');
           expect(res.body.data[0].type).to.be.equal(officeTest.type);
-          officeTest.id = res.body.data[0].type;
           expect(res.body.data[0].name).to.be.equal(officeTest.name);
           done();
         });
