@@ -4,9 +4,6 @@ import fs from 'fs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
-import parties from './parties';
-import offices from './offices';
-
 dotenv.config();
 
 const validator = (identifier, data) => {
@@ -19,8 +16,8 @@ const validator = (identifier, data) => {
         case 'parties': {
             schema = {
                 name: Joi.string().trim().min(2).required(),
-                hqAddress: Joi.string().required(),
-                logoUrl: Joi.string().trim().required()
+                hqaddress: Joi.string().required(),
+                logourl: Joi.string().trim().required()
             };
             break;
         }
@@ -44,6 +41,27 @@ const validator = (identifier, data) => {
                 password: Joi.string().trim().min(8).required(),
                 passporturl: Joi.string().trim(),
                 isadmin: Joi.boolean().required(),
+            };
+            break;
+        }
+        case 'candidate': {
+            schema = {
+                party: Joi.number().required(),
+                user: Joi.number().required(),
+            };
+            break;
+        }
+        case 'login': {
+            schema = {
+                username: Joi.string().trim().min(5).required(),
+                password: Joi.string().trim().min(8).required(),
+            };
+            break;
+        }
+        case 'votes': {
+            schema = {
+                office: Joi.number().required(),
+                candidate: Joi.number().required(),
             };
             break;
         }
@@ -105,8 +123,8 @@ const comparePassword = (passwordHash, password) => {
 
 const generateToken = (userinfo) => {
     const Issuetoken = jwt.sign(userinfo,
-        process.env.SECRET, { expiresIn: '1d' });
+        'hdj%^&.)#', { expiresIn: '1d' });
     return Issuetoken;
 };
 
-export { parties, offices, validator, writeInDb, hashPassword, comparePassword, generateToken, validationErrors };
+export { validator, writeInDb, hashPassword, comparePassword, generateToken, validationErrors };

@@ -1,10 +1,9 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-
+import dotenv from 'dotenv';
 import server from '../app';
-import { offices } from '../helpers';
 
-const officesMaxID = offices.length;
+dotenv.config();
 
 const should = chai.should();
 const expect = chai.expect;
@@ -14,6 +13,7 @@ chai.use(chaiHttp);
 const random = Math.floor(Math.random() * 1000) + 1;
 
 const officeTest = {
+    id: '',
     type: 'fedearal',
     name: 'numbejGG2' + random
 };
@@ -22,6 +22,7 @@ const officeTest = {
     it('Political offices creation Succeed', (done) => {
       chai.request(server)
         .post('/api/v1/offices')
+        .set('auth-access', process.env.TEST_ADMIN_TOKEN)
         .send(officeTest)
         .end((err, res) => {
           res.should.have.status(201);
@@ -31,9 +32,20 @@ const officeTest = {
           done();
         });
     });
+    it('Get specific political offices Succeed', (done) => {
+      chai.request(server)
+        .get(`/api/v1/offices/${officeTest.id}`)
+        .set('auth-access', process.env.TEST_ADMIN_TOKEN)
+        .end((err, res) => {
+          res.should.have.status(200);
+          expect(res.body).to.be.a('object');
+          done();
+        });
+    });
     it('Check political party existance', (done) => {
       chai.request(server)
         .post('/api/v1/offices')
+        .set('auth-access', process.env.TEST_ADMIN_TOKEN)
         .send(officeTest)
         .end((err, res) => {
           res.should.have.status(409);
@@ -46,18 +58,7 @@ const officeTest = {
     it('Get all political offices Succeed', (done) => {
       chai.request(server)
         .get('/api/v1/offices')
-        .end((err, res) => {
-          res.should.have.status(200);
-          expect(res.body).to.be.a('object');
-          done();
-        });
-    });
-  });
-
-  describe('Get specific political offices Test', () => {
-    it('Get specific political offices Succeed', (done) => {
-      chai.request(server)
-        .get(`/api/v1/offices/${officesMaxID}`)
+        .set('auth-access', process.env.TEST_ADMIN_TOKEN)
         .end((err, res) => {
           res.should.have.status(200);
           expect(res.body).to.be.a('object');

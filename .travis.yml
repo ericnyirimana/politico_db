@@ -10,3 +10,7 @@ after_success:
   - npm run coverage
   - codeclimate-test-reporter < ./coverage/lcov.info
   - nyc report --reporter=text-lcov | coveralls
+env:
+  - POSTGRES_URL : postgres://travis@localhost:5432/travis
+services:
+  - postgresql

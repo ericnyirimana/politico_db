@@ -6,13 +6,8 @@ ENV.config();
 class Setup {
     constructor() {
         this.pool = new Pool({
-            user: process.env.PGUSER,
-            host: process.env.PGHOST,
-            database: process.env.PGDATABASE,
-            password: process.env.PGPASSWORD,
-            port: process.env.PGPORT,
+            connectionString: process.env.POSTGRES_URL,
         });
-
         this.pool.on('connect', () => {
             console.log('connected...');
         });
@@ -37,7 +32,6 @@ class Setup {
 
         this.pool.query(users)
         .then((res) => {
-            // console.log(res);
         })
         .catch((error) => {
             console.log(error.message);
@@ -53,7 +47,6 @@ class Setup {
 
         this.pool.query(parties)
         .then((res) => {
-            // console.log(res);
         })
         .catch((error) => {
             console.log(error.message);
@@ -68,7 +61,6 @@ class Setup {
 
         this.pool.query(office)
         .then((res) => {
-            // console.log(res);
         })
         .catch((error) => {
             console.log(error.message);
@@ -77,31 +69,29 @@ class Setup {
         const candidate = `
         CREATE TABLE IF NOT EXISTS candidate (
             id SERIAL PRIMARY KEY,
-            office integer,
-            party integer,
-            candidate integer
+            office INT,
+            party INT,
+            candidate INT
         );`;
 
         this.pool.query(candidate)
         .then((res) => {
-            // console.log(res);
         })
         .catch((error) => {
             console.log(error.message);
         });
 
-        const votes = `
+        const candidatesvotes = `
         CREATE TABLE IF NOT EXISTS votes (
             id SERIAL PRIMARY KEY,
             createdon date,
-            createdby integer,
-            office integer,
-            candidate integer
+            createdby INT,
+            office INT,
+            candidate INT
         );`;
 
-        this.pool.query(votes)
+        this.pool.query(candidatesvotes)
         .then((res) => {
-            // console.log(res);
         })
         .catch((error) => {
             console.log(error.message);
@@ -111,14 +101,13 @@ class Setup {
         CREATE TABLE IF NOT EXISTS petition (
             id SERIAL PRIMARY KEY,
             createdon date,
-            createdby integer,
-            office integer,
+            createdby INT,
+            office INT,
             body text
         );`;
 
         this.pool.query(petition)
         .then((res) => {
-            // console.log(res);
         })
         .catch((error) => {
             console.log(error.message);
@@ -126,4 +115,4 @@ class Setup {
     }
 }
 
-export default new Setup();
+new Setup();

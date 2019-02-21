@@ -1,112 +1,81 @@
-import { parties, validator, writeInDb, validationErrors } from '../helpers/index';
+import { validator, validationErrors } from '../helpers/index';
+import db from '../models/db';
 
-const addParty = (req, res) => {
-    // Validate Data
-    const {
-        error
-    } = validator('parties', req.body);
-    if (error) {
-        return validationErrors(res, error);
-    }
-    const name = parties.find(n => (n.name === req.body.name.replace(/\s+/g, ' ').trim()));
-    if (name) {
-        return res.status(409).send({
-            status: 409,
-            error: 'Oops! Political party name already exist'
-        });
-    }
-    const party = {
-        id: parties.length + 1,
-        name: req.body.name.replace(/\s+/g, ' ').trim(),
-        hqAddress: req.body.hqAddress.replace(/\s+/g, ' ').trim(),
-        logoUrl: req.body.logoUrl.replace(/\s+/g, ' ').trim(),
-    };
-    parties.push(party);
-    if (writeInDb('parties', parties)) {
-        const response = {
-            status: 201,
-            data: [{
-                name: party.name,
-                hqAddress: party.hqAddress,
-                logoUrl: party.logoUrl
-            }]
-        };
-        res.status(201).send(response);
-    }
-    return true;
+const Parties = {
+    async addParty(req, res) {
+        if (req.user.role !== 'admin') {
+            return res.status(401).send({ status: 401, error: 'Unauthorized Access' });
+        }
+        // Validate Data
+        const { error } = validator('parties', req.body);
+        if (error) {
+            return validationErrors(res, error);
+        }
+        const findpartyQuery = 'SELECT * FROM party WHERE name=$1';
+        const partyResult = await db.query(findpartyQuery, [req.body.name]);
+        const partyData = partyResult.rows;
+        if (partyData[0]) {
+            return res.status(409).send({
+                status: 409,
+                error: 'Political party name already taken',
+            });
+        }
+        const text = 'INSERT INTO party (name, hqaddress, logourl) VALUES ($1, $2, $3)';
+        const values = [
+            req.body.name,
+            req.body.hqaddress,
+            req.body.logourl,
+        ];
+        try {
+            await db.query(text, values);
+            const response = {
+                status: 201,
+                data: [{
+                    name: req.body.name,
+                    hqaddress: req.body.hqaddress,
+                    logourl: req.body.logourl,
+                }],
+            };
+            return res.status(201).send(response);
+        } catch (errorMessage) {
+            return res.status(400).send({ status: 400, error: errorMessage });
+        }
+    },
+    async getParties(req, res) {
+        const findAllQuery = 'SELECT * FROM party ORDER BY id DESC';
+        try {
+            const { rows } = await db.query(findAllQuery);
+            const response = {
+                status: 200,
+                data: rows,
+            };
+            return res.send(response);
+        } catch (error) {
+            return res.status(400).send({ status: 400, error });
+        }
+    },
+    async specificParty(req, res) {
+        const text = 'SELECT * FROM party WHERE id = $1';
+        try {
+            const { rows } = await db.query(text, [req.params.id]);
+            if (!rows[0]) {
+                return res.status(404).send({
+                    status: 404,
+                    error: 'Party with given ID was not found',
+                });
+            }
+            const response = {
+                status: 200,
+                data: rows[0],
+            };
+            return res.send(response);
+        } catch (error) {
+            return res.status(400).send({
+                status: 400,
+                error,
+            });
+        }
+    },
 };
 
-const getParties = (req, res) => {
-    const response = {
-        status: 200,
-        data: parties
-    };
-    res.send(response);
-};
-
-const specificParty = (req, res) => {
-    const party = parties.find(m => m.id === parseInt(req.params.id, 10));
-    if (!party) {
-        return res.status(404).send({
-            status: 404,
-            error: 'Political party with given ID was not found'
-        });
-    }
-    const response = {
-        status: 200,
-        data: [{
-            id: party.id,
-            names: party.name,
-            hqAddress: party.hqAddress,
-            logoUrl: party.logoUrl
-        }]
-    };
-    return res.send(response);
-};
-
-const updateParty = (req, res) => {
-    const arrIndex = parties.findIndex(q => q.id === parseInt(req.params.id, 10));
-    const party = parties.find(q => q.id === parseInt(req.params.id, 10));
-    if (!party) {
-        return res.status(404).send({
-            status: 404,
-            error: 'Political Party with given ID was not found'
-        });
-    }
-    // update political party name name
-    parties[arrIndex].name = req.body.name;
-    if (writeInDb('parties', parties)) {
-        const response = {
-            status: 200,
-            data: [{
-                id: party.id,
-                name: party.name
-            }]
-        };
-        res.send(response);
-    }
-    return true;
-};
-
-const deleteParty = (req, res) => {
-    // Validate Data
-    const party = parties.find(m => m.id === parseInt(req.params.id, 10));
-    if (!party) {
-        return res.status(404).send({
-            status: 404,
-            error: 'Political Party with given ID was not found'
-        });
-    }
-    const index = parties.indexOf(party);
-    parties.splice(index, 1);
-    if (writeInDb('parties', parties)) {
-        const response = {
-            status: 200,
-            data: 'Political Party deleted'
-        };
-        res.send(response);
-    }
-    return true;
-};
-
-export { addParty, getParties, specificParty, deleteParty, updateParty };
+export default Parties;
