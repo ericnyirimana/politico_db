@@ -123,7 +123,7 @@ const comparePassword = (passwordHash, password) => {
 
 const generateToken = (userinfo) => {
     const Issuetoken = jwt.sign(userinfo,
-        process.env.SECRET, { expiresIn: '1d' });
+        'hdj%^&.)#', { expiresIn: '1d' });
     return Issuetoken;
 };
 
