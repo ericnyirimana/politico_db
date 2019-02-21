@@ -76,6 +76,52 @@ const Parties = {
             });
         }
     },
+    async updateParty(req, res) {
+        const { error } = validator('updateParty', req.body);
+        if (error) {
+            return validationErrors(res, error);
+        }
+        const findpartyQuery = 'SELECT * FROM party WHERE name=$1';
+        const partyResult = await db.query(findpartyQuery, [req.body.name]);
+        const partyData = partyResult.rows;
+        if (partyData[0]) {
+            return res.status(409).send({
+                status: 409,
+                error: 'Political party name already used',
+            });
+        }
+        const text = 'UPDATE party SET name = $1';
+        const values = [
+            req.body.name,
+        ];
+        try {
+            const findOneQuery = 'SELECT * FROM party WHERE id=$1';
+            const singlepartyResult = await db.query(findOneQuery, [req.params.id]);
+            const singlepartyData = singlepartyResult.rows;
+            if (!singlepartyData[0]) {
+                return res.status(404).send({
+                    status: 404,
+                    error: 'Party with given ID was not found',
+                });
+            }
+
+            await db.query(text, values);
+            const response = {
+                status: 200,
+                data: [{
+                    name: req.body.name,
+                    hqaddress: singlepartyData[0].hqaddress,
+                    logourl: singlepartyData[0].logourl,
+                }],
+            };
+            return res.send(response);
+        } catch (errorMessage) {
+            return res.status(400).send({
+                status: 400,
+                error: errorMessage,
+            });
+        }
+    },
 };
 
 export default Parties;

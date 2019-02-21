@@ -65,6 +65,15 @@ const validator = (identifier, data) => {
             };
             break;
         }
+        case 'updateParty': {
+            schema = {
+                name: Joi.string().alphanum().trim().min(2)
+                .required(),
+                hqaddress: Joi.string().trim().min(5),
+                logourl: Joi.string().trim(),
+            };
+            break;
+        }
         default: {
             schema = false;
         }
