@@ -40,7 +40,8 @@ before((done) => {
       .post('/api/v1/auth/signup')
       .type('application/x-www-form-urlencoded')
       .send(adminTest)
-      .end((err, res) => {
+      .end((err, res) => { 
+        console.log(res);
           process.env.TEST_ADMIN_TOKEN = res.body.token;
           done();
       });
@@ -54,22 +55,34 @@ after((done) => {
       });
 });
   describe('User signup', () => {
-    it('The user signup successfully', (done) => {
+    it('The user signup successfully, returned 201', (done) => {
       chai.request(server)
         .post('/api/v1/auth/signup')
         .set('Content-Type', 'application/x-www-form-urlencoded')
         .send(userTest)
         .end((err, res) => {
+          console.log(res);
           res.should.have.status(201);
           expect(res.body).to.be.a('object');
           expect(res.body.token).to.be.a('string');
           done();
         });
     });
+    it('Check the user existance, returned 400', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/signup')
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+        .send(userTest)
+        .end((err, res) => {
+          res.should.have.status(400);
+          expect(res.body).to.be.a('object');
+          done();
+        });
+    });
   });
 
   describe('User Login', () => {
-    it('The user login successfully', (done) => {
+    it('The user login successfully, returned 200', (done) => {
       chai.request(server)
         .post('/api/v1/auth/login')
         .set('Content-Type', 'application/x-www-form-urlencoded')
@@ -79,6 +92,20 @@ after((done) => {
         })
         .end((err, res) => {
           res.should.have.status(200);
+          expect(res.body).to.be.a('object');
+          done();
+        });
+    });
+    it('The user login unauthorized, returned 401', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/login')
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+        .send({
+          username: 'testtotest',
+          password: '123409842',
+        })
+        .end((err, res) => {
+          res.should.have.status(401);
           expect(res.body).to.be.a('object');
           done();
         });
