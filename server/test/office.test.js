@@ -28,7 +28,18 @@ const officeTest = {
           res.should.have.status(201);
           expect(res.body).to.be.a('object');
           expect(res.body.data[0].type).to.be.equal(officeTest.type);
+          officeTest.id = res.body.data[0].type;
           expect(res.body.data[0].name).to.be.equal(officeTest.name);
+          done();
+        });
+    });
+    it('Get specific political offices Succeed', (done) => {
+      chai.request(server)
+        .get(`/api/v1/offices/${officeTest.id}`)
+        .set('auth-access', process.env.TEST_ADMIN_TOKEN)
+        .end((err, res) => {
+          res.should.have.status(200);
+          expect(res.body).to.be.a('object');
           done();
         });
     });
@@ -48,19 +59,6 @@ const officeTest = {
     it('Get all political offices Succeed', (done) => {
       chai.request(server)
         .get('/api/v1/offices')
-        .set('auth-access', process.env.TEST_ADMIN_TOKEN)
-        .end((err, res) => {
-          res.should.have.status(200);
-          expect(res.body).to.be.a('object');
-          done();
-        });
-    });
-  });
-
-  describe('Get specific political offices Test', () => {
-    it('Get specific political offices Succeed', (done) => {
-      chai.request(server)
-        .get(`/api/v1/offices/${officeTest.id}`)
         .set('auth-access', process.env.TEST_ADMIN_TOKEN)
         .end((err, res) => {
           res.should.have.status(200);

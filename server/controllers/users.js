@@ -6,10 +6,10 @@ import db from '../models/db';
 const Users = {
     async userSignup(req, res) {
         // Validate Data
-        // const { error } = validator('user', req.body);
-        // if (error) {
-        //     return validationErrors(res, error);
-        // }
+        const { error } = validator('user', req.body);
+        if (error) {
+            return validationErrors(res, error);
+        }
         const findUsernameQuery = 'SELECT * FROM users WHERE username=$1';
         const userResult = await db.query(findUsernameQuery, [req.body.username]);
         const userData = userResult.rows;

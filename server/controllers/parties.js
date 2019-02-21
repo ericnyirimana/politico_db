@@ -3,9 +3,9 @@ import db from '../models/db';
 
 const Parties = {
     async addParty(req, res) {
-        // if (req.user.role !== 'admin') {
-        //     return res.status(401).send({ status: 401, error: 'Unauthorized Access' });
-        // }
+        if (req.user.role !== 'admin') {
+            return res.status(401).send({ status: 401, error: 'Unauthorized Access' });
+        }
         // Validate Data
         const { error } = validator('parties', req.body);
         if (error) {
