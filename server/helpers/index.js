@@ -86,7 +86,6 @@ const validator = (identifier, data) => {
             schema = {
                 office: Joi.number().required(),
                 body: Joi.string().trim().min(5).required(),
-                evidence: Joi.array().required(),
             };
             break;
         }
