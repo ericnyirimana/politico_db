@@ -14,7 +14,7 @@ const Auth = {
             if (!rows[0]) {
                 return res.status(403).send({ status: 403, error: 'The token you provided is invalid' });
             }
-            req.user = { id: decoded.user, role: decoded.role };
+            req.user = { id: decoded.user, firstname: decoded.firstname, lastname: decoded.lastname, role: decoded.role };
             next();
         } catch (error) {
             return res.status(400).send({ status: 400, error });

@@ -43,13 +43,19 @@ const Votes = {
             req.body.candidate,
         ];
         try {
+            const findofficenameQuery = 'SELECT * FROM office WHERE id=$1';
+            const officenameResult = await db.query(findofficenameQuery, [req.body.office]);
+            const officenameData = officenameResult.rows;
+            const findcandidatenameQuery = 'SELECT * FROM users WHERE id=$1';
+            const candidatnameResult = await db.query(findcandidatenameQuery, [officeData[0].candidate]);
+            const candidatenameData = candidatnameResult.rows;
             await db.query(text, values);
             const response = {
                 status: 201,
                 data: [{
-                    office: req.body.office,
-                    candidate: req.body.candidate,
-                    voter: req.user.id,
+                    office: officenameData[0].name,
+                    candidate: `${candidatenameData[0].firstname} ${candidatenameData[0].lastname}`,
+                    voter: `${req.user.firstname} ${req.user.lastname}`,
                 }],
             };
             return res.status(201).send(response);
