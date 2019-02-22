@@ -12,7 +12,7 @@ const Parties = {
             return validationErrors(res, error);
         }
         const findpartyQuery = 'SELECT * FROM party WHERE name=$1';
-        const partyResult = await db.query(findpartyQuery, [req.body.name]);
+        const partyResult = await db.query(findpartyQuery, [req.body.name.replace(/\s+/g, ' ').trim()]);
         const partyData = partyResult.rows;
         if (partyData[0]) {
             return res.status(409).send({
@@ -22,18 +22,18 @@ const Parties = {
         }
         const text = 'INSERT INTO party (name, hqaddress, logourl) VALUES ($1, $2, $3)';
         const values = [
-            req.body.name,
-            req.body.hqaddress,
-            req.body.logourl,
+            req.body.name.replace(/\s+/g, ' ').trim(),
+            req.body.hqaddress.replace(/\s+/g, ' ').trim(),
+            req.body.logourl.replace(/\s+/g, ' ').trim(),
         ];
         try {
             await db.query(text, values);
             const response = {
                 status: 201,
                 data: [{
-                    name: req.body.name,
-                    hqaddress: req.body.hqaddress,
-                    logourl: req.body.logourl,
+                    name: req.body.name.replace(/\s+/g, ' ').trim(),
+                    hqaddress: req.body.hqaddress.replace(/\s+/g, ' ').trim(),
+                    logourl: req.body.logourl.replace(/\s+/g, ' ').trim(),
                 }],
             };
             return res.status(201).send(response);
@@ -85,7 +85,7 @@ const Parties = {
             return validationErrors(res, error);
         }
         const findpartyQuery = 'SELECT * FROM party WHERE name=$1';
-        const partyResult = await db.query(findpartyQuery, [req.body.name]);
+        const partyResult = await db.query(findpartyQuery, [req.body.name.replace(/\s+/g, ' ').trim()]);
         const partyData = partyResult.rows;
         if (partyData[0]) {
             return res.status(409).send({
@@ -112,7 +112,7 @@ const Parties = {
             const response = {
                 status: 200,
                 data: [{
-                    name: req.body.name,
+                    name: req.body.name.replace(/\s+/g, ' ').trim(),
                     hqaddress: singlepartyData[0].hqaddress,
                     logourl: singlepartyData[0].logourl,
                 }],

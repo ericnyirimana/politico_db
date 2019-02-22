@@ -15,7 +15,9 @@ const validator = (identifier, data) => {
     switch (identifier) {
         case 'parties': {
             schema = {
-                name: Joi.string().trim().min(2).required(),
+                name: Joi.string().regex(/^[a-z]+$/).lowercase().trim()
+                .min(2)
+                .required(),
                 hqaddress: Joi.string().required(),
                 logourl: Joi.string().trim().required()
             };
@@ -23,16 +25,22 @@ const validator = (identifier, data) => {
         }
         case 'offices': {
             schema = {
-                name: Joi.string().trim().min(2).required(),
+                name: Joi.string().regex(/^[a-z]+$/).lowercase().trim()
+                .min(2)
+                .required(),
                 type: Joi.string().required()
             };
             break;
         }
         case 'user': {
             schema = {
-                firstname: Joi.string().trim().min(3).required(),
-                lastname: Joi.string().trim().min(3).required(),
-                othername: Joi.string().trim(),
+                firstname: Joi.string().regex(/^[a-z]+$/).lowercase().trim()
+                .min(3)
+                .required(),
+                lastname: Joi.string().regex(/^[a-z]+$/).lowercase().trim()
+                .min(3)
+                .required(),
+                othername: Joi.string().regex(/^[a-z]+$/).lowercase().trim(),
                 email: Joi.string().trim().email({
                     minDomainAtoms: 2,
                 }).required(),
@@ -67,8 +75,8 @@ const validator = (identifier, data) => {
         }
         case 'updateParty': {
             schema = {
-                name: Joi.string().alphanum().trim().min(2)
-                .required(),
+                name: Joi.string().regex(/^[a-z]+$/).lowercase().trim()
+                .min(2),
                 hqaddress: Joi.string().trim().min(5),
                 logourl: Joi.string().trim(),
             };
@@ -88,38 +96,6 @@ const validator = (identifier, data) => {
     }
     return Joi.validate(data, schema, options);
 };
-
-const writeInFile = (file, data) => {
-    fs.writeFile(file, JSON.stringify(data, null, 2), (err) => {
-        if (err) {
-            return {
-                status: 500,
-                error: err
-            };
-        }
-        return true;
-    });
-    return true;
-};
-
-const writeInDb = (identifier, data) => {
-    let file = '';
-    switch (identifier) {
-        case 'parties': {
-            file = './server/models/parties.json';
-            break;
-        }
-        case 'offices': {
-            file = './server/models/offices.json';
-            break;
-        }
-        default: {
-            file = 'unknown.json';
-        }
-    }
-    return writeInFile(file, data);
-};
-
 const validationErrors = (res, error) => {
     const errorMessage = error.details.map(d => d.message);
     return res.status(400).send({
@@ -144,4 +120,4 @@ const generateToken = (userinfo) => {
     return Issuetoken;
 };
 
-export { validator, writeInDb, hashPassword, comparePassword, generateToken, validationErrors };
+export { validator, hashPassword, comparePassword, generateToken, validationErrors };

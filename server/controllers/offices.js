@@ -12,7 +12,7 @@ const Offices = {
             return validationErrors(res, error);
         }
         const findofficeQuery = 'SELECT * FROM office WHERE name=$1';
-        const officeResult = await db.query(findofficeQuery, [req.body.name]);
+        const officeResult = await db.query(findofficeQuery, [req.body.name.replace(/\s+/g, ' ').trim()]);
         const officeData = officeResult.rows;
         if (officeData[0]) {
             return res.status(409).send({
@@ -22,16 +22,16 @@ const Offices = {
         }
         const text = 'INSERT INTO office (type, name) VALUES ($1, $2)';
         const values = [
-            req.body.type,
-            req.body.name,
+            req.body.type.replace(/\s+/g, ' ').trim(),
+            req.body.name.replace(/\s+/g, ' ').trim(),
         ];
         try {
             await db.query(text, values);
             const response = {
                 status: 201,
                 data: [{
-                    type: req.body.type,
-                    name: req.body.name,
+                    type: req.body.type.replace(/\s+/g, ' ').trim(),
+                    name: req.body.name.replace(/\s+/g, ' ').trim(),
                 }],
             };
             return res.status(201).send(response);
@@ -134,8 +134,8 @@ const Offices = {
             const response = {
                 status: 201,
                 data: [{
-                    office: req.params.id,
-                    user: req.body.user,
+                    office: officeData[0].name,
+                    user: `${userData[0].firstname} ${userData[0].lastname}`,
                 }],
             };
             return res.status(201).send(response);
@@ -150,10 +150,18 @@ const Offices = {
         for (const office of officeResult.rows) {
             const findAllVotes = 'SELECT * FROM votes WHERE office = $1 AND candidate = $2';
             const resultVotes = await db.query(findAllVotes, [req.params.id, office.candidate]);
-            console.log(resultVotes.rows);
+            const findofficenameQuery = 'SELECT * FROM office WHERE id=$1';
+            const officenameResult = await db.query(findofficenameQuery, [req.params.id]);
+            const officenameData = officenameResult.rows;
+            const findcandidatidQuery = 'SELECT * FROM candidate WHERE id=$1';
+            const candidateidResult = await db.query(findcandidatidQuery, [office.candidate]);
+            const candidateidData = candidateidResult.rows;
+            const findcandidatenameQuery = 'SELECT * FROM users WHERE id=$1';
+            const candidatenameResult = await db.query(findcandidatenameQuery, [candidateidData[0].candidate]);
+            const candidatenameData = candidatenameResult.rows;
                 data.push({
-                    office: office.office,
-                    candidate: office.candidate,
+                    office: officenameData[0].name,
+                    candidate: `${candidatenameData[0].firstname} ${candidatenameData[0].lastname}`,
                     result: resultVotes.rows.length,
                   });
             }
