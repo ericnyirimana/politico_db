@@ -10,11 +10,9 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-const random = Math.floor(Math.random() * 1000) + 1;
-
 const partiesTest = {
     id: '',
-    name: 'FPROLH' + random,
+    name: 'FPROLH',
     hqaddress: 'Rusororo',
     logourl: 'https://ericnyirimana.github.io/politico/UI/img/party-logo.png',
 };

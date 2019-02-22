@@ -10,12 +10,10 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-const random = Math.floor(Math.random() * 1000) + 1;
-
 const officeTest = {
     id: '',
     type: 'fedearal',
-    name: 'numbejGG2' + random
+    name: 'numbejGG'
 };
 
   describe('Political offices Creation Test', () => {
