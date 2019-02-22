@@ -18,13 +18,12 @@ const Petition = {
                 error: 'Political party name already taken',
             });
         }
-        const text = 'INSERT INTO petition (createdon, createdby, office, body, evidence) VALUES ($1, $2, $3, $4, $5) returning *';
+        const text = 'INSERT INTO petition (createdon, createdby, office, body) VALUES ($1, $2, $3, $4) returning *';
         const values = [
             moment().format('YYYY-MM-DD'),
             req.user.id,
             req.body.office,
             req.body.body,
-            req.body.evidence,
         ];
         try {
             const { rows } = await db.query(text, values);

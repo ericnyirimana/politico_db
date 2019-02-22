@@ -103,8 +103,7 @@ class Setup {
             createdon date,
             createdby INT,
             office INT,
-            body text,
-            evidence text[]
+            body text
         );`;
 
         this.pool.query(petition)
