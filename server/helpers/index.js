@@ -74,6 +74,14 @@ const validator = (identifier, data) => {
             };
             break;
         }
+        case 'petition': {
+            schema = {
+                office: Joi.number().required(),
+                body: Joi.string().trim().min(5).required(),
+                evidence: Joi.array().required(),
+            };
+            break;
+        }
         default: {
             schema = false;
         }

@@ -67,16 +67,16 @@ const Users = {
                 user: [{ rows }],
             };
             return res.status(201).send(response);
-        } catch (errorMessage) { console.log(errorMessage);
+        } catch (errorMessage) {
             return res.status(400).send({ status: 400, error: errorMessage });
         }
     },
     async userLogin(req, res) {
         // Validate Data
-        // const { error } = validator('login', req.body);
-        // if (error) {
-        //     return validationErrors(res, error);
-        // }
+        const { error } = validator('login', req.body);
+        if (error) {
+            return validationErrors(res, error);
+        }
         const findAllQuery = 'SELECT * FROM users WHERE username = $1 LIMIT 1';
         try {
             const { rows } = await db.query(findAllQuery, [req.body.username]);
